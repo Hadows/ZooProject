@@ -40,12 +40,11 @@ public class ZOO {
         Set<String> famiglie = zooDatabase.keySet();
 
         famiglie.forEach(famiglia -> {
-
-            if (famiglia == animale.getClass().getSimpleName()){
+            if (famiglia.equals(animale.getClass().getSuperclass().getSimpleName())){
                 Set<String> specie = zooDatabase.get(famiglia).keySet();
 
                 specie.forEach(spece ->{
-                    if (spece == animale.getClass().getSimpleName()){
+                    if (spece.equals(animale.getClass().getSimpleName())){
                         zooDatabase.get(famiglia).get(spece).add(animale);
                     }
                 });
@@ -77,6 +76,7 @@ public class ZOO {
     //ricerca l'esemplare più alto e più basso per la specie indicata
     public String ricercaAltoBasso(String specie){
         ArrayList<Animale> animali = getListSpecie(specie);
+        System.out.println(animali);
 
         float max = 0;
         Animale animaleMax = null;
@@ -94,7 +94,7 @@ public class ZOO {
             }
         }
 
-        String result = "Animale più alto: " + animaleMax.getNome() + " Animale più basso" + animaleMin.getNome();
+        String result = "Animale più alto: " + animaleMax.getNome() + " Animale più basso: " + animaleMin.getNome();
         return result;
     }
 
@@ -118,7 +118,7 @@ public class ZOO {
             }
         }
 
-        String result = "Animale più grasso: " + animaleMax.getNome() + " Animale più magro" + animaleMin.getNome();
+        String result = "Animale più grasso: " + animaleMax.getNome() + " Animale più magro: " + animaleMin.getNome();
         return result;
     }
 
