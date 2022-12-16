@@ -124,7 +124,11 @@ public class ZOO {
 
     //ricerca l'animale dello zoo con la coda più lunga
     public String ricercaCodaLunga(){
-        ArrayList<?extends Felino> felini = (ArrayList<?extends Felino>) getListFamiglia("Felino");
+        ArrayList<Animale> animali = getListFamiglia("Felino");
+        ArrayList<Felino> felini = new ArrayList<>();
+        for (int i = 0; i < animali.size(); i++){
+            felini.add((Felino)animali.get(i));
+        }
 
         float max = 0;
         Felino animaleMax = null;
@@ -142,12 +146,16 @@ public class ZOO {
 
     //ricerca l'animale con l'apertura alare maggiore
     public String ricercaAperturaAlare(){
-        ArrayList<?extends Aviano> felini = (ArrayList<?extends Aviano>) getListFamiglia("Aviano");
+        ArrayList<Animale> animali = getListFamiglia("Aviano");
+        ArrayList<Aviano> aviani = new ArrayList<>();
+        for (int i = 0; i < animali.size(); i++){
+            aviani.add((Aviano)animali.get(i));
+        }
 
         float max = 0;
         Aviano animaleMax = null;
-        for (int i = 0; i < felini.size(); i++){
-            Aviano animale = felini.get(i);
+        for (int i = 0; i < aviani.size(); i++){
+            Aviano animale = aviani.get(i);
             if (animale.getAperturaAlare() > max){
                 max = animale.getAperturaAlare();
                 animaleMax = animale;
