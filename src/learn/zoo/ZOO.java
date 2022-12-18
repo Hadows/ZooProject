@@ -18,15 +18,6 @@ public class ZOO {
 
     private ZOO() {
         zooDatabase = new HashMap<>();
-        zooDatabase.put("Aviano", new HashMap<>());
-        zooDatabase.put("Felino", new HashMap<>());
-
-        Map<String, ArrayList<Animale>> aviano = zooDatabase.get("Aviano");
-        aviano.put("Aquila", new ArrayList<>());
-
-        Map<String, ArrayList<Animale>> felino = zooDatabase.get("Felino");
-        felino.put("Leone", new ArrayList<>());
-        felino.put("Tigre", new ArrayList<>());
     }
 
     public static synchronized ZOO getInstance() {
@@ -36,26 +27,31 @@ public class ZOO {
         return instance;
     }
 
-    public void addAnimale(Animale animale){
-        Set<String> famiglie = zooDatabase.keySet();
+    public <T extends Animale> void addAnimale(T animale){
+        String famiglia = animale.getClass().getSuperclass().getSimpleName();
+        String specie = animale.getClass().getSimpleName();
 
-        famiglie.forEach(famiglia -> {
-            if (famiglia.equals(animale.getClass().getSuperclass().getSimpleName())){
-                Set<String> specie = zooDatabase.get(famiglia).keySet();
-
-                specie.forEach(spece ->{
-                    if (spece.equals(animale.getClass().getSimpleName())){
-                        zooDatabase.get(famiglia).get(spece).add(animale);
-                    }
-                });
+        if (zooDatabase.containsKey(famiglia)){
+            Map<String, ArrayList<Animale>> family = zooDatabase.get(famiglia);
+            if (family.containsKey(specie)){
+                family.get(specie).add(animale);
             }
-        });
+            else {
+                family.put(specie, new ArrayList<>());
+                family.get(specie).add(animale);
+            }
+        }
+        else{
+            zooDatabase.put(famiglia, new HashMap<>());
+            zooDatabase.get(famiglia).put(specie, new ArrayList<>());
+            zooDatabase.get(famiglia).get(specie).add(animale);
+        }
     }
 
     private ArrayList<Animale> getListSpecie(String nomeSpecie){
         ArrayList<Animale> lista = new ArrayList<>();
         zooDatabase.keySet().forEach(chiave -> zooDatabase.get(chiave).keySet().forEach(key -> {
-            if (key == nomeSpecie){
+            if (key.equals(nomeSpecie)){
                 lista.addAll(zooDatabase.get(chiave).get(key));
             }
         }));
@@ -76,7 +72,6 @@ public class ZOO {
     //ricerca l'esemplare più alto e più basso per la specie indicata
     public String ricercaAltoBasso(String specie){
         ArrayList<Animale> animali = getListSpecie(specie);
-        System.out.println(animali);
 
         float max = 0;
         Animale animaleMax = null;

@@ -12,6 +12,9 @@ public class Main {
         PopulateZoo();
 
         System.out.println(zoo.ricercaAltoBasso("Leone"));
+        System.out.println(zoo.ricercaGrassoMagro("Aquila"));
+        System.out.println(zoo.ricercaCodaLunga());
+        System.out.println(zoo.ricercaAperturaAlare());
     }
 
     public static void PopulateZoo(){
@@ -50,7 +53,7 @@ public class Main {
                 .età(8)
                 .dataIngresso("11/11/2022")
                 .peso(18)
-                .altezza(1.22f)
+                .altezza(0.1f)
                 .aperturaAlare(1.22f)
                 .build());
     }
