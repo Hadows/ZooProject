@@ -48,22 +48,22 @@ public class ZOO {
         }
     }
 
-    private ArrayList<Animale> getListSpecie(String nomeSpecie){
-        ArrayList<Animale> lista = new ArrayList<>();
+    private <T extends Animale> ArrayList<T> getListSpecie(String nomeSpecie){
+        ArrayList<T> lista = new ArrayList<>();
         zooDatabase.keySet().forEach(chiave -> zooDatabase.get(chiave).keySet().forEach(key -> {
             if (key.equals(nomeSpecie)){
-                lista.addAll(zooDatabase.get(chiave).get(key));
+                lista.addAll((Collection<? extends T>) zooDatabase.get(chiave).get(key));
             }
         }));
         return lista;
     }
 
-    private ArrayList<Animale> getListFamiglia(String nomeFamiglia){
+    private <T extends Animale> ArrayList<T> getListFamiglia(String nomeFamiglia){
         Map<String, ArrayList<Animale>> famiglia = zooDatabase.get(nomeFamiglia);
-        ArrayList<Animale> lista = new ArrayList<>();
+        ArrayList<T> lista = new ArrayList<>();
 
         famiglia.keySet().forEach(chiave -> {
-            lista.addAll(famiglia.get(chiave));
+            lista.addAll((Collection<? extends T>) famiglia.get(chiave));
         });
 
         return lista;
@@ -119,11 +119,7 @@ public class ZOO {
 
     //ricerca l'animale dello zoo con la coda più lunga
     public String ricercaCodaLunga(){
-        ArrayList<Animale> animali = getListFamiglia("Felino");
-        ArrayList<Felino> felini = new ArrayList<>();
-        for (int i = 0; i < animali.size(); i++){
-            felini.add((Felino)animali.get(i));
-        }
+        ArrayList<Felino> felini = getListFamiglia("Felino");
 
         float max = 0;
         Felino animaleMax = null;
@@ -141,11 +137,7 @@ public class ZOO {
 
     //ricerca l'animale con l'apertura alare maggiore
     public String ricercaAperturaAlare(){
-        ArrayList<Animale> animali = getListFamiglia("Aviano");
-        ArrayList<Aviano> aviani = new ArrayList<>();
-        for (int i = 0; i < animali.size(); i++){
-            aviani.add((Aviano)animali.get(i));
-        }
+        ArrayList<Aviano> aviani = getListFamiglia("Aviano");
 
         float max = 0;
         Aviano animaleMax = null;
