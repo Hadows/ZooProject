@@ -50,11 +50,11 @@ public class ZOO {
 
     private <T extends Animale> ArrayList<T> getListSpecie(String nomeSpecie){
         ArrayList<T> lista = new ArrayList<>();
-        zooDatabase.keySet().forEach(chiave -> zooDatabase.get(chiave).keySet().forEach(key -> {
-            if (key.equals(nomeSpecie)){
-                lista.addAll((Collection<? extends T>) zooDatabase.get(chiave).get(key));
+        zooDatabase.keySet().forEach(chiave -> {
+            if (zooDatabase.get(chiave).containsKey(nomeSpecie)){
+                lista.addAll((Collection<? extends T>) zooDatabase.get(chiave).get(nomeSpecie));
             }
-        }));
+        });
         return lista;
     }
 
