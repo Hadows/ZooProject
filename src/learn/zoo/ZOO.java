@@ -6,13 +6,9 @@ import learn.animali.famiglia.Felino;
 
 import java.util.*;
 
-//dizionari con le famiglie e le specie
-//metodo che le popola
 public class ZOO {
     // SINGLETON
     private static ZOO instance;
-
-    //Database mockato
     Map<String, Map<String, ArrayList<Animale>>> zooDatabase;
 
 
